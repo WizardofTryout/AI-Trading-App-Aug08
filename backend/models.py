@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime
+from sqlalchemy import Column, Integer, String, Float, DateTime, JSON
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -18,9 +18,8 @@ class Trade(Base):
     leverage = Column(Float)
     fees = Column(Float, nullable=True)
 
-class Setting(Base):
-    __tablename__ = "settings"
+class AppSettings(Base):
+    __tablename__ = "app_settings"
 
-    id = Column(Integer, primary_key=True, index=True)
-    key = Column(String, unique=True, index=True)
-    value = Column(String)
+    id = Column(Integer, primary_key=True)
+    settings_json = Column(JSON)

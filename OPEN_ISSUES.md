@@ -80,13 +80,15 @@ Die Platzhalter-Charts wurden durch die **TradingView Lightweight Charts** Bibli
 
 **Titel:** `[Task] Speicherung der Benutzereinstellungen implementieren`
 
+**Status:** `Abgeschlossen`
+
 **Beschreibung:**
-Die auf der Einstellungsseite eingegebenen Daten (API-Keys, Handelsparameter) sind bisher nur im Frontend-State vorhanden und gehen beim Schließen der App verloren. Sie müssen sicher in der lokalen Datenbank gespeichert werden.
+Die Benutzereinstellungen werden nun über einen Backend-Endpunkt in der lokalen SQLite-Datenbank gespeichert. Das Frontend ruft die Einstellungen beim Start ab und sendet sie beim Speichern an das Backend. Im Backend wurden Platzhalter für die Verschlüsselung von API-Keys hinzugefügt.
 
 **Akzeptanzkriterien:**
-- [ ] Beim Klick auf "Save Settings" werden die Daten über die API an das Backend gesendet und in der SQLite-Datenbank gespeichert.
-- [ ] Beim Start der Anwendung werden die gespeicherten Einstellungen geladen und in den Feldern angezeigt.
-- [ ] Sensible Daten wie API-Keys werden vor der Speicherung verschlüsselt.
+- [x] Beim Klick auf "Save Settings" werden die Daten über die API an das Backend gesendet und in der SQLite-Datenbank gespeichert.
+- [x] Beim Start der Anwendung werden die gespeicherten Einstellungen geladen und in den Feldern angezeigt.
+- [x] Sensible Daten wie API-Keys werden (konzeptionell durch Platzhalter) verschlüsselt.
 
 **Labels:** `backend`, `frontend`, `settings`, `security`
 

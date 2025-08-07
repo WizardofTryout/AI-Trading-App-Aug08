@@ -65,24 +65,28 @@ export const uploadPineScript = async (file: File) => {
   return { success: true };
 };
 
+const API_URL = "http://localhost:8000";
+
 export const getSettings = async (): Promise<Settings> => {
-  return {
-    bitgetApiKey: '',
-    binanceApiKey: '',
-    aiApiKey: '',
-    ollamaUrl: 'http://localhost:11434',
-    investmentPerTrade: 100,
-    riskRewardRatio: '1:2',
-    stopLoss: 2,
-    takeProfit: 4,
-    tradeDirection: 'Both',
-    leverage: 1,
-  };
+    const response = await fetch(`${API_URL}/settings`);
+    if (!response.ok) {
+        throw new Error("Failed to fetch settings");
+    }
+    return response.json();
 };
 
 export const saveSettings = async (settings: Settings) => {
-  console.log('Saving settings:', settings);
-  return { success: true };
+    const response = await fetch(`${API_URL}/settings`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(settings),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to save settings");
+    }
+    return response.json();
 };
 
 export const getTradingPairs = async () => {

@@ -16,9 +16,10 @@ const SettingsPage: React.FC = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (settings) {
+      const { id, value, type } = event.target;
       setSettings({
         ...settings,
-        [event.target.id]: event.target.value,
+        [id]: type === 'number' ? parseFloat(value) : value,
       });
     }
   };

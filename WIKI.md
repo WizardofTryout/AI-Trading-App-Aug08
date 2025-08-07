@@ -17,7 +17,7 @@ Die Anwendung befindet sich in einem fortgeschrittenen Prototyp-Stadium. Die Ben
 *   **Anpassbare Zeitfenster:** Für jeden Chart kann das Zeitfenster (z.B. 1m, 5m, 1h) individuell ausgewählt werden.
 *   **Echtzeit-Monitoring (simuliert):** Eine Ansicht zeigt simulierte Daten zu Gewinn/Verlust, offenen Positionen und ausstehenden Orders.
 *   **Manuelle Eingriffe:** Es gibt Buttons, um simulierte Trades manuell zu schließen.
-*   **Einstellungs-Seite:** Eine separate Seite zur Verwaltung von (bisher nur simulierten) API-Keys für Börsen (Bitget, Binance) und KI-Dienste (OpenAI, Ollama) sowie für Handelsparameter (Investitionssumme, Hebel etc.).
+*   **Einstellungs-Seite mit Persistenz:** Eine separate Seite zur Verwaltung von API-Keys und Handelsparametern, deren Konfigurationen in einer lokalen Datenbank gespeichert werden.
 *   **Trade-History:** Eine Seite zur Anzeige vergangener Trades mit Filter- und Sortierfunktionen sowie einer Zusammenfassung von Gesamtgewinn/-verlust und Gebühren.
 *   **Lokale Datenbank (Integration vorbereitet):** Die Anwendung ist für die Nutzung einer lokalen SQLite-Datenbank zur Speicherung der Trade-Historie vorbereitet.
 
