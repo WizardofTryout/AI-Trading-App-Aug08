@@ -67,11 +67,23 @@ Um die Anwendung auf Ihrem lokalen Rechner zu testen, folgen Sie diesen Schritte
     npm install
     ```
 
-4.  **Anwendung im Entwicklungsmodus starten:**
+4.  **Frontend im Entwicklungsmodus starten:**
     ```bash
     npm run dev
     ```
-    Dies startet einen lokalen Server. Sie können die Anwendung nun in Ihrem Webbrowser öffnen, üblicherweise unter `http://localhost:5173` (die genaue Adresse wird im Terminal angezeigt).
+    Dies startet den Frontend-Entwicklungsserver. Sie können die Anwendung nun in Ihrem Webbrowser öffnen, üblicherweise unter `http://localhost:5173`.
+
+5.  **Backend-Abhängigkeiten installieren:** Öffnen Sie ein *neues* Terminalfenster und wechseln Sie in das `backend`-Verzeichnis.
+    ```bash
+    cd backend
+    pip install -r requirements.txt
+    ```
+
+6.  **Backend-Server starten:** Führen Sie im `backend`-Verzeichnis den folgenden Befehl aus:
+    ```bash
+    uvicorn main:app --reload
+    ```
+    Der Backend-Server ist nun unter `http://localhost:8000` erreichbar.
 
 5.  **(Optional) Desktop-App erstellen:**
     *   Installieren Sie die Tauri-Abhängigkeiten (siehe [offizielle Tauri-Anleitung](https://tauri.app/v1/guides/getting-started/prerequisites)).
