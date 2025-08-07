@@ -21,8 +21,10 @@ Die Anwendung befindet sich in einem fortgeschrittenen Prototyp-Stadium. Die Ben
 *   **Trade-History:** Eine Seite zur Anzeige vergangener Trades mit Filter- und Sortierfunktionen sowie einer Zusammenfassung von Gesamtgewinn/-verlust und Gebühren.
 *   **Lokale Datenbank (Integration vorbereitet):** Die Anwendung ist für die Nutzung einer lokalen SQLite-Datenbank zur Speicherung der Trade-Historie vorbereitet.
 
+**Teilweise implementiert:**
+*   **Pine-Script-Engine:** Eine grundlegende Engine existiert, die einfache Indikator-Aufrufe (RSI, MACD) parsen und ausführen kann. Komplexere Logik wird noch nicht unterstützt.
+
 **Noch nicht implementiert (nur als Platzhalter):**
-*   **Pine-Script-Engine:** Die Fähigkeit, Pine-Script-Code tatsächlich auszuführen.
 *   **Trading-Engine:** Die Logik, die Handelsstrategien auf Echtzeitdaten anwendet und Handelssignale generiert.
 *   **Echte API-Anbindung:** Die Verbindung zu den Börsen und KI-Diensten ist bisher nur simuliert.
 

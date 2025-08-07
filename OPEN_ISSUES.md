@@ -25,13 +25,15 @@ Dieses Issue umfasst den Aufbau des Python/FastAPI-Backends gemäß dem Plan in 
 
 **Titel:** `[Task] Pine-Script-Engine implementieren`
 
-**Beschreibung:**
-Die bestehenden Dateien `parser.ts` und `interpreter.ts` sind aktuell nur Platzhalter. In dieser Aufgabe soll die Logik implementiert werden, um Pine-Script-Code tatsächlich zu parsen und auszuführen. Dies ist ein Kernstück, um benutzerdefinierte Strategien zu ermöglichen.
+**Status:** `In Bearbeitung`
 
-**Akzeptanzkriterien:**
-- [ ] Der Parser kann eine definierte Teilmenge von Pine-Script in einen Abstract Syntax Tree (AST) umwandeln.
-- [ ] Der Interpreter kann den generierten AST mit gegebenen Marktdaten (z.B. Candlestick-Daten) ausführen.
-- [ ] Gängige Indikatoren wie RSI und MACD werden korrekt berechnet und können in Strategien verwendet werden.
+**Beschreibung:**
+Eine grundlegende, vereinfachte Version der Pine-Script-Engine wurde implementiert. Sie verwendet einen Regex-basierten Parser und einen Interpreter, um Indikator-Aufrufe auszuführen. Die Bibliothek `indicators.py` enthält Implementierungen für RSI und MACD.
+
+**Nächste Schritte / Verbleibende Arbeit:**
+- [ ] Den Parser erweitern, um komplexere Ausdrücke und Logik zu unterstützen (z.B. `if`, `else`, Vergleichsoperatoren).
+- [ ] Die Indikatoren-Bibliothek um weitere gängige Indikatoren erweitern (z.B. Bollinger Bänder, Moving Averages).
+- [ ] Fehlerbehandlung im Parser und Interpreter verbessern.
 
 **Labels:** `backend`, `feature`, `pine-script`
 
