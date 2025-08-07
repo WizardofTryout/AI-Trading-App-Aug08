@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-from ..pine_script_engine import parser, interpreter
+from pine_script_engine import parser, interpreter
 import pandas as pd
 
 router = APIRouter(

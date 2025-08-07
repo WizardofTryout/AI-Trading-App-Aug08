@@ -2,7 +2,7 @@ import asyncio
 import websockets
 import json
 import pandas as pd
-from .pine_script_engine import parser, interpreter
+from pine_script_engine import parser, interpreter
 
 # This state would be managed more robustly in a real application
 engine_state = {

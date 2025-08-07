@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from .database import engine
-from . import models
-from .routers import settings, trades, strategy, engine
+from database import engine
+import models
+from routers import settings, trades, strategy, engine
 
 models.Base.metadata.create_all(bind=engine)
 

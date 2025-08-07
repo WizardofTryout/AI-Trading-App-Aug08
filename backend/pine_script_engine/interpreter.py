@@ -1,4 +1,4 @@
-from .. import indicators
+import indicators
 import pandas as pd
 
 def execute_pine_script(parsed_calls: list, market_data: dict):

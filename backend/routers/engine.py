@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from .. import trading_engine
+import trading_engine
 
 router = APIRouter(
     prefix="/engine",

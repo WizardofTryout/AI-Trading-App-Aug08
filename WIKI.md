@@ -47,10 +47,36 @@ Die Anwendung ist als moderne Web-Anwendung konzipiert, die mit Tauri zu einer D
 
 ## 4. Installations- und Setup-Anleitung
 
-Um die Anwendung auf Ihrem lokalen Rechner zu testen, folgen Sie diesen Schritten:
+> **🐳 EMPFOHLEN: Docker Setup**  
+> Für die einfachste und zuverlässigste Entwicklungsumgebung verwenden Sie das Docker-Setup.  
+> **→ Siehe [DOCKER_DEVELOPMENT_GUIDE.md](DOCKER_DEVELOPMENT_GUIDE.md) für die vollständige Anleitung**
+
+### Quick Start mit Docker
+
+```bash
+# 1. Projekt starten
+./start.sh
+
+# 2. Anwendung öffnen
+# Frontend: http://localhost:5173
+# Backend API: http://localhost:8000
+# API Docs: http://localhost:8000/docs
+
+# 3. Projekt stoppen
+./stop.sh
+```
+
+**Voraussetzungen für Docker:**
+*   Docker Desktop installiert und gestartet
+
+### Alternative: Native Installation (Erweitert)
+
+Für Entwickler, die ohne Docker arbeiten möchten:
 
 **Voraussetzungen:**
 *   Node.js (Version 18 oder höher) und npm müssen installiert sein.
+*   Python 3.11+ für das Backend
+*   Optional: Rust für Tauri Desktop-App
 *   Git zur Versionsverwaltung.
 
 **Schritte:**
