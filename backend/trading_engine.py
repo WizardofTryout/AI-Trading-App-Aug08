@@ -11,39 +11,7 @@ engine_state = {
     "tasks": {}
 }
 
-def execute_json_strategy(strategy: dict, market_data: dict):
-    """
-    Executes a strategy defined in a JSON format.
-    """
-    condition = strategy.get("condition", {})
-    op = condition.get("operator")
-    inputs = condition.get("inputs", [])
-
-    if not op or len(inputs) != 2:
-        return None # Invalid format
-
-    # Resolve inputs
-    resolved_inputs = []
-    for i in inputs:
-        if i["type"] == "indicator":
-            indicator_func = getattr(indicators, i["name"])
-            # Assuming the first param is always the data series
-            series = market_data[i["params"]["source"]]
-            params = {k: v for k, v in i["params"].items() if k != "source"}
-            resolved_inputs.append(indicator_func(series, **params).iloc[-1])
-        elif i["type"] == "value":
-            resolved_inputs.append(i["value"])
-
-    # Evaluate condition
-    if op == '>':
-        return resolved_inputs[0] > resolved_inputs[1]
-    elif op == '<':
-        return resolved_inputs[0] < resolved_inputs[1]
-
-    return None
-
-
-async def _websocket_client(pair: str, strategy: dict):
+async def _websocket_client(pair: str, strategy_script: str):
     """
     Connects to a real-time data feed and runs the strategy.
     This is a conceptual implementation.
@@ -65,9 +33,10 @@ async def _websocket_client(pair: str, strategy: dict):
                 market_data = {'close': pd.Series([close_price])} # Simplified for this example
 
                 # Execute strategy
-                result = execute_json_strategy(strategy, market_data)
+                parsed_script = parser.parse_pine_script(strategy_script)
+                condition_results = interpreter.execute_pine_script(parsed_script, market_data)
 
-                print(f"Strategy results for {pair}: {result}")
+                print(f"Strategy results for {pair}: {condition_results}")
                 # TODO: Implement signal generation and trade execution logic
     except Exception as e:
         print(f"Error in WebSocket client for {pair}: {e}")
@@ -108,7 +77,7 @@ def start_engine_for_pair(pair: str, strategy_script: str):
         return
 
     # Using the simulation loop for this sandboxed environment
-    task = asyncio.create_task(_simulation_loop(pair, strategy))
+    task = asyncio.create_task(_simulation_loop(pair, strategy_script))
     engine_state["tasks"][pair] = task
     print(f"Engine started for {pair}.")
 

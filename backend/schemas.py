@@ -14,7 +14,7 @@ class AppSettings(BaseModel):
     leverage: float | None = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TradeBase(BaseModel):
     pair: str
@@ -35,4 +35,4 @@ class Trade(TradeBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
