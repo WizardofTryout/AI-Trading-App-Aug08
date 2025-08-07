@@ -3,8 +3,8 @@ from pydantic import BaseModel
 from pine_script_engine import parser, interpreter
 import pandas as pd
 from sqlalchemy.orm import Session
-from .. import models, schemas
-from ..database import get_db
+import models, schemas
+from database import get_db
 
 router = APIRouter(
     prefix="/strategy",
