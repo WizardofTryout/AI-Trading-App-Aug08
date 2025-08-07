@@ -98,12 +98,15 @@ Die Benutzereinstellungen werden nun über einen Backend-Endpunkt in der lokalen
 
 **Titel:** `[Feature] "Relation-Builder" für visuelle Strategien fertigstellen`
 
+**Status:** `Abgeschlossen`
+
 **Beschreibung:**
-Die ursprüngliche Idee eines visuellen Drag-and-Drop-Editors für Strategien wurde zurückgestellt. Dieses Issue würde die Wiederaufnahme und Fertigstellung dieser Funktion umfassen.
+Der Relation-Builder wurde wieder in die Benutzeroberfläche integriert und ist über die Seitenleiste erreichbar. Er ermöglicht das Erstellen von visuellen Strategien durch Drag-and-Drop. Eine Übersetzungsfunktion wandelt den Graphen in ein JSON-Format um, und die Trading-Engine wurde angepasst, um dieses Format auszuführen.
 
 **Akzeptanzkriterien:**
-- [ ] Die `RelationBuilder`-Komponente ist wieder in die UI integriert.
-- [ ] Ein im Editor erstellter visueller Graph kann in eine ausführbare Strategie (z.B. JSON-Format) übersetzt werden.
-- [ ] Die Trading-Engine kann diese übersetzte Strategie ausführen.
+- [x] Die `RelationBuilder`-Komponente ist wieder in die UI integriert.
+- [x] Ein im Editor erstellter visueller Graph kann in eine ausführbare Strategie (JSON-Format) übersetzt werden.
+- [x] Die Trading-Engine kann diese übersetzte Strategie ausführen.
+- [x] Es gibt API-Endpunkte zum Speichern und Laden der visuellen Strategien.
 
 **Labels:** `feature`, `frontend`, `ui`

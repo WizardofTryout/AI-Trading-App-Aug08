@@ -1,7 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from ..pine_script_engine import parser, interpreter
 import pandas as pd
+from sqlalchemy.orm import Session
+from .. import models, schemas
+from ..database import get_db
 
 router = APIRouter(
     prefix="/strategy",
@@ -11,6 +14,24 @@ router = APIRouter(
 class StrategyExecutionRequest(BaseModel):
     script: str
     market_data: dict[str, list]
+
+# This is a placeholder for a more robust strategy model
+class VisualStrategy(BaseModel):
+    name: str
+    strategy_json: dict
+
+@router.post("/visual")
+def save_visual_strategy(strategy: VisualStrategy, db: Session = Depends(get_db)):
+    # In a real app, you'd save this to a new 'strategies' table
+    print(f"Saving visual strategy '{strategy.name}': {strategy.strategy_json}")
+    return {"message": "Strategy saved successfully"}
+
+@router.get("/visual/{name}")
+def get_visual_strategy(name: str, db: Session = Depends(get_db)):
+    # In a real app, you'd fetch this from the database
+    print(f"Fetching visual strategy '{name}'")
+    return {"name": name, "strategy_json": {}}
+
 
 @router.post("/execute")
 def execute_strategy(request: StrategyExecutionRequest):

@@ -3,6 +3,7 @@ import websockets
 import json
 import pandas as pd
 from .pine_script_engine import parser, interpreter
+from . import indicators
 
 # This state would be managed more robustly in a real application
 engine_state = {
@@ -10,7 +11,39 @@ engine_state = {
     "tasks": {}
 }
 
-async def _websocket_client(pair: str, strategy_script: str):
+def execute_json_strategy(strategy: dict, market_data: dict):
+    """
+    Executes a strategy defined in a JSON format.
+    """
+    condition = strategy.get("condition", {})
+    op = condition.get("operator")
+    inputs = condition.get("inputs", [])
+
+    if not op or len(inputs) != 2:
+        return None # Invalid format
+
+    # Resolve inputs
+    resolved_inputs = []
+    for i in inputs:
+        if i["type"] == "indicator":
+            indicator_func = getattr(indicators, i["name"])
+            # Assuming the first param is always the data series
+            series = market_data[i["params"]["source"]]
+            params = {k: v for k, v in i["params"].items() if k != "source"}
+            resolved_inputs.append(indicator_func(series, **params).iloc[-1])
+        elif i["type"] == "value":
+            resolved_inputs.append(i["value"])
+
+    # Evaluate condition
+    if op == '>':
+        return resolved_inputs[0] > resolved_inputs[1]
+    elif op == '<':
+        return resolved_inputs[0] < resolved_inputs[1]
+
+    return None
+
+
+async def _websocket_client(pair: str, strategy: dict):
     """
     Connects to a real-time data feed and runs the strategy.
     This is a conceptual implementation.
@@ -40,34 +73,33 @@ async def _websocket_client(pair: str, strategy_script: str):
     except Exception as e:
         print(f"Error in WebSocket client for {pair}: {e}")
 
-async def _simulation_loop(pair: str, strategy_script: str):
+async def _simulation_loop(pair: str, strategy: dict):
     """
     Simulates a real-time data feed for testing purposes.
     """
-    print(f"Starting simulation for {pair}...")
+    print(f"Starting simulation for {pair} with strategy: {strategy}")
 
     # Simulate a data series
     close_prices = [100, 102, 105, 103, 106, 108, 110, 109, 112, 115, 113, 111, 114, 117, 120]
-    market_data = {'close': pd.Series(close_prices)}
+    market_data = {'close': pd.Series(close_prices)} # In a real app, 'source' would be specified
+
+    # Add a 'source' key to indicator params for the simulation
+    if strategy.get("condition", {}).get("inputs"):
+        for i in strategy["condition"]["inputs"]:
+            if i["type"] == "indicator":
+                i["params"]["source"] = "close"
 
     while engine_state["is_running"]:
-        # Execute strategy on the full historical data for this simulation
-        parsed_calls = parser.parse_pine_script(strategy_script)
-        results = interpreter.execute_pine_script(parsed_calls, market_data)
+        result = execute_json_strategy(strategy, market_data)
 
-        # Get the last calculated value as the "current" signal
-        last_rsi = results.get('my_rsi', pd.Series(dtype=float)).iloc[-1]
-
-        if not pd.isna(last_rsi):
-            print(f"Simulated RSI for {pair}: {last_rsi:.2f}")
-            if last_rsi < 30:
-                print(f"--- BUY SIGNAL for {pair} ---")
-            elif last_rsi > 70:
-                print(f"--- SELL SIGNAL for {pair} ---")
+        if result is True:
+            print(f"--- STRATEGY CONDITION MET for {pair} ---")
+        elif result is False:
+            print(f"--- Strategy condition NOT met for {pair} ---")
 
         await asyncio.sleep(5) # Simulate 5-second interval
 
-def start_engine_for_pair(pair: str, strategy_script: str):
+def start_engine_for_pair(pair: str, strategy: dict):
     """
     Starts the trading engine for a specific trading pair.
     """

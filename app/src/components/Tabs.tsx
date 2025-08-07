@@ -1,18 +1,17 @@
 import React from 'react';
-import { useUIStore } from '../store/uiStore';
 
 interface Tab {
-  label: string;
+  label: React.ReactNode;
   content: React.ReactNode;
 }
 
 interface TabsProps {
   tabs: Tab[];
+  activeTab: number;
+  setActiveTab: (index: number) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({ tabs }) => {
-  const { activeTab, setActiveTab } = useUIStore();
-
+const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, setActiveTab }) => {
   return (
     <div className="h-full flex flex-col bg-background">
       <div className="flex border-b border-accent">
@@ -20,7 +19,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           <button
             key={index}
             className={`p-4 text-font ${
-              activeTab === index ? 'bg-accent' : 'hover:bg-accent'
+              activeTab === index ? 'bg-accent' : 'hover:bg-gray-700'
             }`}
             onClick={() => setActiveTab(index)}
           >
@@ -28,7 +27,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
           </button>
         ))}
       </div>
-      <div className="flex-1 p-4">{tabs[activeTab].content}</div>
+      <div className="flex-1 h-full">{tabs[activeTab]?.content}</div>
     </div>
   );
 };

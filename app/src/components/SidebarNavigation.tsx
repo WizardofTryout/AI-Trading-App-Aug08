@@ -19,35 +19,32 @@ const AccordionSection: React.FC<{ title: string; children: React.ReactNode }> =
   );
 };
 
-const SidebarNavigation: React.FC = () => {
-  const [strategies, setStrategies] = useState<{ id: string; name: string }[]>([]);
-  const [indicators, setIndicators] = useState<{ id: string; name: string }[]>([]);
-  const [templates, setTemplates] = useState<{ id: string; name: string }[]>([]);
+import { useUIStore } from '../store/uiStore';
+import { LayoutDashboard, Waypoints } from 'lucide-react';
 
-  useEffect(() => {
-    getStrategies().then(setStrategies);
-    getIndicators().then(setIndicators);
-    getTemplates().then(setTemplates);
-  }, []);
+const SidebarNavigation: React.FC = () => {
+  const { activeView, setView } = useUIStore();
+
+  const navItems = [
+    { name: 'Dashboard', view: 'dashboard', icon: <LayoutDashboard size={20} /> },
+    { name: 'Relation Builder', view: 'relation-builder', icon: <Waypoints size={20} /> },
+  ];
 
   return (
-    <div className="bg-background w-64 border-r border-accent">
-      <AccordionSection title="Strategies">
-        {strategies.map((strategy) => (
-          <p key={strategy.id} className="text-font">{strategy.name}</p>
-        ))}
-      </AccordionSection>
-      <AccordionSection title="Indicators">
-        {indicators.map((indicator) => (
-          <p key={indicator.id} className="text-font">{indicator.name}</p>
-        ))}
-      </AccordionSection>
-      <AccordionSection title="Templates">
-        {templates.map((template) => (
-          <p key={template.id} className="text-font">{template.name}</p>
-        ))}
-      </AccordionSection>
-    </div>
+    <nav className="bg-background w-64 border-r border-accent p-4 space-y-2">
+      {navItems.map((item) => (
+        <button
+          key={item.name}
+          onClick={() => setView(item.view as any)}
+          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-left text-font hover:bg-accent ${
+            activeView === item.view ? 'bg-accent' : ''
+          }`}
+        >
+          {item.icon}
+          <span className="font-semibold">{item.name}</span>
+        </button>
+      ))}
+    </nav>
   );
 };
 

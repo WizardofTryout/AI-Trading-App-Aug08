@@ -1,18 +1,10 @@
 import { create } from 'zustand';
 import { Edge, Node, OnNodesChange, OnEdgesChange, applyNodeChanges, applyEdgeChanges, addEdge, Connection } from 'reactflow';
 
-export interface IndicatorNodeData {
-  name: string;
-  type: string;
-  value: any;
+export interface NodeData {
+  label: string;
+  [key: string]: any;
 }
-
-export interface OperatorNodeData {
-  operation: string;
-  inputs: string[];
-}
-
-export type NodeData = IndicatorNodeData | OperatorNodeData;
 
 export type RelationNode = Node<NodeData>;
 export type RelationEdge = Edge;
@@ -26,12 +18,12 @@ type RelationBuilderState = {
   addNode: (node: RelationNode) => void;
 };
 
+let id = 1;
+const getId = () => `node_${id++}`;
+
 export const useRelationBuilderStore = create<RelationBuilderState>((set, get) => ({
-  nodes: [
-    { id: '1', position: { x: 0, y: 0 }, data: { name: 'RSI', type: 'indicator', value: 14 } },
-    { id: '2', position: { x: 0, y: 100 }, data: { operation: '>', inputs: [] } },
-  ],
-  edges: [{ id: 'e1-2', source: '1', target: '2' }],
+  nodes: [],
+  edges: [],
   onNodesChange: (changes) => {
     set({
       nodes: applyNodeChanges(changes, get().nodes),
@@ -48,8 +40,9 @@ export const useRelationBuilderStore = create<RelationBuilderState>((set, get) =
     });
   },
   addNode: (node) => {
+    const newNode = { ...node, id: getId() };
     set({
-      nodes: [...get().nodes, node],
+      nodes: [...get().nodes, newNode],
     });
   }
 }));
