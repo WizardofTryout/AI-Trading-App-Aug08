@@ -10,7 +10,7 @@ import { useUIStore } from '../store/uiStore';
 
 const TradingPairDashboard: React.FC<{ pair: string }> = ({ pair }) => {
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col h-full">
       <CandlestickChartSection pair={pair} />
       <div className="h-1/3 border-t border-accent">
         <TradeInfoPanel pair={pair} />
@@ -19,23 +19,32 @@ const TradingPairDashboard: React.FC<{ pair: string }> = ({ pair }) => {
   );
 };
 
-const TradingViewAppShell: React.FC = () => {
-  const { isDarkMode, isSidebarOpen, isSettingsOpen, toggleSettings, isTradeHistoryOpen, toggleTradeHistory, activeTradingPairs, removeTradingPair } = useUIStore();
+const Dashboard: React.FC = () => {
+    const { activeTradingPairs, removeTradingPair, activeDashboardTab, setActiveDashboardTab } = useUIStore();
 
-  const tabs = activeTradingPairs.map((pair) => ({
-    label: (
-      <div className="flex items-center">
-        <span>{pair}</span>
-        <button
-          className="ml-2 text-red-500 hover:text-red-700"
-          onClick={() => removeTradingPair(pair)}
-        >
-          x
-        </button>
-      </div>
-    ),
-    content: <TradingPairDashboard pair={pair} />,
-  }));
+    const tabs = activeTradingPairs.map((pair) => ({
+        label: (
+            <div className="flex items-center">
+                <span>{pair}</span>
+                <button
+                    className="ml-2 text-red-500 hover:text-red-700"
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent tab selection when closing
+                        removeTradingPair(pair);
+                    }}
+                >
+                    x
+                </button>
+            </div>
+        ),
+        content: <TradingPairDashboard pair={pair} />,
+    }));
+
+    return <Tabs tabs={tabs} activeTab={activeDashboardTab} setActiveTab={setActiveDashboardTab} />;
+};
+
+const TradingViewAppShell: React.FC = () => {
+  const { isDarkMode, isSidebarOpen, isSettingsOpen, toggleSettings, isTradeHistoryOpen, toggleTradeHistory, activeView } = useUIStore();
 
   return (
     <div className={`${isDarkMode ? 'dark' : ''} bg-background text-font h-screen flex flex-col`}>
@@ -43,7 +52,8 @@ const TradingViewAppShell: React.FC = () => {
       <div className="flex flex-1 overflow-hidden">
         {isSidebarOpen && <SidebarNavigation />}
         <main className="flex-1 flex flex-col">
-          <Tabs tabs={tabs} />
+          {activeView === 'dashboard' && <Dashboard />}
+          {activeView === 'relation-builder' && <RelationBuilder />}
         </main>
       </div>
       {isSettingsOpen && (
