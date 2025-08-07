@@ -60,9 +60,9 @@ def execute_pine_script(parsed_script: dict, market_data: dict):
 
         if lhs_val is not None and rhs_val is not None:
             if op == '>':
-                result = lhs_val > rhs_val
+                result = bool(lhs_val > rhs_val)
             elif op == '<':
-                result = lhs_val < rhs_val
+                result = bool(lhs_val < rhs_val)
             else:
                 result = False
             condition_results[output_variable] = result

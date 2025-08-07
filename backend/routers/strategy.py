@@ -47,4 +47,7 @@ def execute_strategy(request: StrategyExecutionRequest):
     # Execute the script
     results = interpreter.execute_pine_script(parsed_script, market_data_pd)
 
-    return results
+    # Sanitize results to ensure they are JSON-serializable
+    sanitized_results = {k: bool(v) if isinstance(v, (bool)) else v for k, v in results.items()}
+
+    return sanitized_results
