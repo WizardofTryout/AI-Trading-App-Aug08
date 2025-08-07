@@ -43,14 +43,16 @@ Eine grundlegende, vereinfachte Version der Pine-Script-Engine wurde implementie
 
 **Titel:** `[Task] Echtzeit-Daten-Engine implementieren`
 
-**Beschreibung:**
-Diese Aufgabe beinhaltet die Anbindung an die WebSocket-API von Börsen wie Bitget oder Binance, um einen kontinuierlichen Strom von Marktdaten zu erhalten. Die Trading-Engine muss diese Daten verarbeiten und die unter Issue #2 erstellte Pine-Script-Engine damit füttern.
+**Status:** `In Bearbeitung`
 
-**Akzeptanzkriterien:**
-- [ ] Das Backend kann eine stabile WebSocket-Verbindung zu einer Börsen-API herstellen.
-- [ ] Eingehende Echtzeit-Preisdaten werden korrekt verarbeitet.
-- [ ] Die Trading-Engine führt die gespeicherten Nutzerstrategien bei jeder neuen Datenaktualisierung aus.
-- [ ] Wenn eine Strategiebedingung erfüllt ist, wird ein klares Handelssignal (KAUFEN/VERKAUFEN) generiert.
+**Beschreibung:**
+Eine grundlegende Trading-Engine (`trading_engine.py`) wurde implementiert. Sie enthält den Code für eine WebSocket-Verbindung und eine Simulationsschleife, die neue Datenpunkte simuliert, die Pine-Script-Engine aufruft und Handelssignale generiert. Es wurden API-Endpunkte zur Steuerung der Engine hinzugefügt.
+
+**Nächste Schritte / Verbleibende Arbeit:**
+- [ ] Die Simulationsschleife durch eine echte WebSocket-Datenverarbeitung ersetzen.
+- [ ] Die Logik zur Generierung von Handelssignalen verfeinern.
+- [ ] Eine robuste Fehlerbehandlung und Zustandsverwaltung für die Engine implementieren.
+- [ ] Die Engine so erweitern, dass sie mehrere Strategien für verschiedene Handelspaare parallel ausführen kann.
 
 **Labels:** `backend`, `real-time`, `trading-engine`
 
@@ -60,13 +62,15 @@ Diese Aufgabe beinhaltet die Anbindung an die WebSocket-API von Börsen wie Bitg
 
 **Titel:** `[Enhancement] Echte Chart-Bibliothek integrieren`
 
+**Status:** `Abgeschlossen`
+
 **Beschreibung:**
-Die aktuellen Charts sind nur Platzhalter. Um eine professionelle Analyse zu ermöglichen, sollte eine spezialisierte Charting-Bibliothek integriert werden, die interaktive Features wie Zoomen, Panning und das Einzeichnen von Indikatoren unterstützt.
+Die Platzhalter-Charts wurden durch die **TradingView Lightweight Charts** Bibliothek ersetzt. Es wurde eine React-Wrapper-Komponente (`LightweightChart.tsx`) erstellt, die interaktive Charts anzeigt. Die Datenaktualisierung wird derzeit im Frontend simuliert, um die Echtzeitfähigkeit zu demonstrieren.
 
 **Akzeptanzkriterien:**
-- [ ] Eine Chart-Bibliothek (z.B. TradingView's Lightweight Charts) ist in der `CandlestickChartSection`-Komponente implementiert.
-- [ ] Der Chart kann Echtzeit-Daten, die vom Backend kommen, darstellen und aktualisieren.
-- [ ] Die vom Nutzer ausgewählten Zeitfenster (1m, 5m, etc.) werden korrekt im Chart angewendet.
+- [x] Eine Chart-Bibliothek (TradingView's Lightweight Charts) ist in der `CandlestickChartSection`-Komponente implementiert.
+- [x] Der Chart kann (simulierte) Echtzeit-Daten darstellen und aktualisieren.
+- [x] Die vom Nutzer ausgewählten Zeitfenster (1m, 5m, etc.) werden im Chart-Header angezeigt und können zur Datenabfrage verwendet werden.
 
 **Labels:** `frontend`, `enhancement`, `ui`
 

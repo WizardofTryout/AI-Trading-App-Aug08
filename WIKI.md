@@ -13,7 +13,7 @@ Die Anwendung befindet sich in einem fortgeschrittenen Prototyp-Stadium. Die Ben
 **Implementierte Features:**
 *   **Grafische Benutzeroberfläche (UI):** Das Design orientiert sich stark an professionellen Trading-Plattformen wie TradingView und bietet einen Dark Mode.
 *   **Multi-Pair-Dashboard:** Benutzer können mehrere Handelspaare auswählen und in separaten Tabs überwachen.
-*   **Multi-Chart-Ansicht:** Jeder Tab zeigt einen Candlestick-Chart für das jeweilige Handelspaar an.
+*   **Interaktive Chart-Ansicht:** Jeder Tab zeigt einen interaktiven Candlestick-Chart (basierend auf TradingView's Lightweight Charts) für das jeweilige Handelspaar an.
 *   **Anpassbare Zeitfenster:** Für jeden Chart kann das Zeitfenster (z.B. 1m, 5m, 1h) individuell ausgewählt werden.
 *   **Echtzeit-Monitoring (simuliert):** Eine Ansicht zeigt simulierte Daten zu Gewinn/Verlust, offenen Positionen und ausstehenden Orders.
 *   **Manuelle Eingriffe:** Es gibt Buttons, um simulierte Trades manuell zu schließen.
@@ -24,8 +24,10 @@ Die Anwendung befindet sich in einem fortgeschrittenen Prototyp-Stadium. Die Ben
 **Teilweise implementiert:**
 *   **Pine-Script-Engine:** Eine grundlegende Engine existiert, die einfache Indikator-Aufrufe (RSI, MACD) parsen und ausführen kann. Komplexere Logik wird noch nicht unterstützt.
 
+**Teilweise implementiert:**
+*   **Trading-Engine:** Eine grundlegende Engine (`trading_engine.py`) wurde implementiert, die in einer simulierten Schleife die Pine-Script-Engine aufruft und Signale generiert.
+
 **Noch nicht implementiert (nur als Platzhalter):**
-*   **Trading-Engine:** Die Logik, die Handelsstrategien auf Echtzeitdaten anwendet und Handelssignale generiert.
 *   **Echte API-Anbindung:** Die Verbindung zu den Börsen und KI-Diensten ist bisher nur simuliert.
 
 ## 3. Architektur
