@@ -72,33 +72,34 @@ async def _websocket_client(pair: str, strategy: dict):
     except Exception as e:
         print(f"Error in WebSocket client for {pair}: {e}")
 
-async def _simulation_loop(pair: str, strategy: dict):
+async def _simulation_loop(pair: str, strategy_script: str):
     """
-    Simulates a real-time data feed for testing purposes.
+    Simulates a real-time data feed for testing purposes using the Pine Script engine.
     """
-    print(f"Starting simulation for {pair} with strategy: {strategy}")
+    print(f"Starting simulation for {pair}...")
 
     # Simulate a data series
     close_prices = [100, 102, 105, 103, 106, 108, 110, 109, 112, 115, 113, 111, 114, 117, 120]
-    market_data = {'close': pd.Series(close_prices)} # In a real app, 'source' would be specified
+    market_data = {'close': pd.Series(close_prices)}
 
-    # Add a 'source' key to indicator params for the simulation
-    if strategy.get("condition", {}).get("inputs"):
-        for i in strategy["condition"]["inputs"]:
-            if i["type"] == "indicator":
-                i["params"]["source"] = "close"
+    # Parse the script once, as it doesn't change
+    parsed_script = parser.parse_pine_script(strategy_script)
 
     while engine_state["is_running"]:
-        result = execute_json_strategy(strategy, market_data)
+        # In a real app, you would be updating market_data with new ticks here
 
-        if result is True:
-            print(f"--- STRATEGY CONDITION MET for {pair} ---")
-        elif result is False:
-            print(f"--- Strategy condition NOT met for {pair} ---")
+        # Execute the parsed script against the current market data
+        condition_results = interpreter.execute_pine_script(parsed_script, market_data)
 
-        await asyncio.sleep(5) # Simulate 5-second interval
+        # Check for a final condition result, e.g., 'buy_signal'
+        if condition_results.get("buy_signal") is True:
+            print(f"--- BUY SIGNAL for {pair} ---")
+        elif condition_results.get("sell_signal") is True:
+            print(f"--- SELL SIGNAL for {pair} ---")
 
-def start_engine_for_pair(pair: str, strategy: dict):
+        await asyncio.sleep(5)
+
+def start_engine_for_pair(pair: str, strategy_script: str):
     """
     Starts the trading engine for a specific trading pair.
     """

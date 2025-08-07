@@ -21,40 +21,22 @@ Dieses Issue umfasst den Aufbau des Python/FastAPI-Backends gemäß dem Plan in 
 
 ---
 
-### Issue #2: Pine-Script-Engine fertigstellen
+### Issue #2 & #3: Pine-Script- & Trading-Engine erweitert
 
-**Titel:** `[Task] Pine-Script-Engine implementieren`
+**Titel:** `[Task] Pine-Script- und Trading-Engine erweitern`
 
-**Status:** `In Bearbeitung`
-
-**Beschreibung:**
-Eine grundlegende, vereinfachte Version der Pine-Script-Engine wurde implementiert. Sie verwendet einen Regex-basierten Parser und einen Interpreter, um Indikator-Aufrufe auszuführen. Die Bibliothek `indicators.py` enthält Implementierungen für RSI und MACD.
-
-**Nächste Schritte / Verbleibende Arbeit:**
-- [ ] Den Parser erweitern, um komplexere Ausdrücke und Logik zu unterstützen (z.B. `if`, `else`, Vergleichsoperatoren).
-- [ ] Die Indikatoren-Bibliothek um weitere gängige Indikatoren erweitern (z.B. Bollinger Bänder, Moving Averages).
-- [ ] Fehlerbehandlung im Parser und Interpreter verbessern.
-
-**Labels:** `backend`, `feature`, `pine-script`
-
----
-
-### Issue #3: Echtzeit-Datenverarbeitung & Trading-Engine
-
-**Titel:** `[Task] Echtzeit-Daten-Engine implementieren`
-
-**Status:** `In Bearbeitung`
+**Status:** `Abgeschlossen`
 
 **Beschreibung:**
-Eine grundlegende Trading-Engine (`trading_engine.py`) wurde implementiert. Sie enthält den Code für eine WebSocket-Verbindung und eine Simulationsschleife, die neue Datenpunkte simuliert, die Pine-Script-Engine aufruft und Handelssignale generiert. Es wurden API-Endpunkte zur Steuerung der Engine hinzugefügt.
+Die Pine-Script-Engine wurde erweitert, um nicht nur Indikatoren, sondern auch einfache logische Bedingungen (z.B. `rsi > 70`) zu parsen und auszuwerten. Die Trading-Engine wurde aktualisiert, um diese erweiterte Logik zu nutzen und in ihrer Simulationsschleife konkrete Kauf-/Verkaufssignale zu generieren. Dies schließt die grundlegende Implementierung von Issue #2 und #3 ab.
 
 **Nächste Schritte / Verbleibende Arbeit:**
-- [ ] Die Simulationsschleife durch eine echte WebSocket-Datenverarbeitung ersetzen.
-- [ ] Die Logik zur Generierung von Handelssignalen verfeinern.
-- [ ] Eine robuste Fehlerbehandlung und Zustandsverwaltung für die Engine implementieren.
-- [ ] Die Engine so erweitern, dass sie mehrere Strategien für verschiedene Handelspaare parallel ausführen kann.
+- [ ] **Parser verbessern:** Unterstützung für komplexere Logik (z.B. `and`, `or`, Crossover-Funktionen) hinzufügen.
+- [ ] **Indikatoren-Bibliothek erweitern:** Weitere Indikatoren (z.B. Bollinger Bänder) implementieren.
+- [ ] **Echte WebSocket-Anbindung:** Die Simulation in der Trading-Engine durch eine echte, stabile WebSocket-Verbindung ersetzen.
+- [ ] **Trade-Ausführung:** Die generierten Signale nutzen, um über die Börsen-API tatsächlich Trades auszuführen.
 
-**Labels:** `backend`, `real-time`, `trading-engine`
+**Labels:** `backend`, `feature`, `pine-script`, `trading-engine`
 
 ---
 

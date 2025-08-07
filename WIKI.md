@@ -21,12 +21,11 @@ Die Anwendung befindet sich in einem fortgeschrittenen Prototyp-Stadium. Die Ben
 *   **Trade-History:** Eine Seite zur Anzeige vergangener Trades mit Filter- und Sortierfunktionen sowie einer Zusammenfassung von Gesamtgewinn/-verlust und Gebühren.
 *   **Lokale Datenbank (Integration vorbereitet):** Die Anwendung ist für die Nutzung einer lokalen SQLite-Datenbank zur Speicherung der Trade-Historie vorbereitet.
 
-**Implementierte Features:**
 *   **Visueller Strategie-Editor (Relation-Builder):** Ein Drag-and-Drop-Editor zur visuellen Erstellung von Handelsstrategien wurde implementiert.
 
 **Teilweise implementiert:**
-*   **Pine-Script-Engine:** Eine grundlegende Engine existiert, die einfache Indikator-Aufrufe (RSI, MACD) parsen und ausführen kann. Komplexere Logik wird noch nicht unterstützt.
-*   **Trading-Engine:** Eine grundlegende Engine (`trading_engine.py`) wurde implementiert, die in einer simulierten Schleife die Pine-Script-Engine oder visuell erstellte Strategien aufruft und Signale generiert.
+*   **Pine-Script-Engine:** Die Engine kann Indikatoren (RSI, MACD) und einfache logische Bedingungen (`<`, `>`) parsen und auswerten.
+*   **Trading-Engine:** Die Engine kann nun Skripte mit logischen Bedingungen ausführen und in der Simulation Kauf-/Verkaufssignale generieren.
 
 **Noch nicht implementiert (nur als Platzhalter):**
 *   **Echte API-Anbindung:** Die Verbindung zu den Börsen und KI-Diensten ist bisher nur simuliert.
@@ -48,36 +47,10 @@ Die Anwendung ist als moderne Web-Anwendung konzipiert, die mit Tauri zu einer D
 
 ## 4. Installations- und Setup-Anleitung
 
-> **🐳 EMPFOHLEN: Docker Setup**  
-> Für die einfachste und zuverlässigste Entwicklungsumgebung verwenden Sie das Docker-Setup.  
-> **→ Siehe [DOCKER_DEVELOPMENT_GUIDE.md](DOCKER_DEVELOPMENT_GUIDE.md) für die vollständige Anleitung**
-
-### Quick Start mit Docker
-
-```bash
-# 1. Projekt starten
-./start.sh
-
-# 2. Anwendung öffnen
-# Frontend: http://localhost:5173
-# Backend API: http://localhost:8000
-# API Docs: http://localhost:8000/docs
-
-# 3. Projekt stoppen
-./stop.sh
-```
-
-**Voraussetzungen für Docker:**
-*   Docker Desktop installiert und gestartet
-
-### Alternative: Native Installation (Erweitert)
-
-Für Entwickler, die ohne Docker arbeiten möchten:
+Um die Anwendung auf Ihrem lokalen Rechner zu testen, folgen Sie diesen Schritten:
 
 **Voraussetzungen:**
 *   Node.js (Version 18 oder höher) und npm müssen installiert sein.
-*   Python 3.11+ für das Backend
-*   Optional: Rust für Tauri Desktop-App
 *   Git zur Versionsverwaltung.
 
 **Schritte:**

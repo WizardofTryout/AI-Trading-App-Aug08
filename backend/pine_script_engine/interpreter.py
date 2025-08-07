@@ -1,14 +1,16 @@
 import indicators
 import pandas as pd
 
-def execute_pine_script(parsed_calls: list, market_data: dict):
+def execute_pine_script(parsed_script: dict, market_data: dict):
     """
-    Executes the parsed Pine Script calls using the indicators library.
+    Executes the parsed Pine Script using the indicators library.
+    First calculates all indicators, then evaluates all conditions.
     """
-    # Assuming market_data is a dictionary of pandas Series, e.g., {'close': pd.Series([...])}
-    results = {}
+    # Context to store results of variables (e.g., indicator outputs)
+    context = market_data.copy()
 
-    for call in parsed_calls:
+    # 1. Calculate all indicators
+    for call in parsed_script["indicators"]:
         function_name = call["function"]
         args = call["args"]
         output_variable = call["output"]
@@ -16,26 +18,53 @@ def execute_pine_script(parsed_calls: list, market_data: dict):
         if hasattr(indicators, function_name):
             indicator_func = getattr(indicators, function_name)
 
-            # Prepare arguments for the indicator function
-            # This is a simplified mapping. A real implementation would be more robust.
             prepared_args = []
             for arg in args:
-                if arg in market_data:
-                    prepared_args.append(market_data[arg])
+                if arg in context:
+                    prepared_args.append(context[arg])
                 else:
-                    # Try to convert to int/float if possible
                     try:
                         prepared_args.append(int(arg))
                     except ValueError:
-                        try:
-                            prepared_args.append(float(arg))
-                        except ValueError:
-                            prepared_args.append(arg)
+                        prepared_args.append(arg)
 
-            # Execute the function
-            result = indicator_func(*prepared_args)
-            results[output_variable] = result
+            # Store the result (which could be a Series or a tuple of Series)
+            context[output_variable] = indicator_func(*prepared_args)
         else:
-            print(f"Warning: Indicator '{function_name}' not found in the library.")
+            print(f"Warning: Indicator '{function_name}' not found.")
 
-    return results
+    # 2. Evaluate all conditions
+    condition_results = {}
+    for condition in parsed_script["conditions"]:
+        lhs_name = condition["lhs"]
+        rhs_name = condition["rhs"]
+        op = condition["operator"]
+        output_variable = condition["output"]
+
+        # Get the last value of the series for comparison
+        lhs_val = context.get(lhs_name)
+        if isinstance(lhs_val, pd.Series):
+            lhs_val = lhs_val.iloc[-1]
+
+        rhs_val = context.get(rhs_name)
+        if isinstance(rhs_val, pd.Series):
+            rhs_val = rhs_val.iloc[-1]
+
+        # If RHS is not a variable, it might be a literal value
+        if rhs_val is None:
+            try:
+                rhs_val = float(rhs_name)
+            except ValueError:
+                print(f"Warning: Could not resolve RHS value '{rhs_name}'")
+                continue
+
+        if lhs_val is not None and rhs_val is not None:
+            if op == '>':
+                result = lhs_val > rhs_val
+            elif op == '<':
+                result = lhs_val < rhs_val
+            else:
+                result = False
+            condition_results[output_variable] = result
+
+    return condition_results

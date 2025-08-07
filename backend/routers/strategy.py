@@ -42,12 +42,9 @@ def execute_strategy(request: StrategyExecutionRequest):
     market_data_pd = {k: pd.Series(v) for k, v in request.market_data.items()}
 
     # Parse the script
-    parsed_calls = parser.parse_pine_script(request.script)
+    parsed_script = parser.parse_pine_script(request.script)
 
     # Execute the script
-    results = interpreter.execute_pine_script(parsed_calls, market_data_pd)
+    results = interpreter.execute_pine_script(parsed_script, market_data_pd)
 
-    # Convert pandas Series results to list for JSON response
-    json_results = {k: v.tolist() if isinstance(v, pd.Series) else v for k, v in results.items()}
-
-    return json_results
+    return results
