@@ -11,7 +11,7 @@ class StartRequest(BaseModel):
     strategies: dict[str, str] # e.g., {"BTCUSDT": "my_rsi = ta.rsi(close, 14)"}
 
 @router.post("/start")
-def start_engine(request: StartRequest):
+async def start_engine(request: StartRequest):
     """
     Starts the trading engine with a given set of strategies.
     """
@@ -22,7 +22,7 @@ def start_engine(request: StartRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/stop")
-def stop_engine():
+async def stop_engine():
     """
     Stops the trading engine.
     """
