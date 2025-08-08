@@ -20,7 +20,7 @@ const AccordionSection: React.FC<{ title: string; children: React.ReactNode }> =
 };
 
 import { useUIStore } from '../store/uiStore';
-import { LayoutDashboard, Waypoints } from 'lucide-react';
+import { LayoutDashboard, Waypoints, FileText } from 'lucide-react';
 
 const SidebarNavigation: React.FC = () => {
   const { activeView, setView } = useUIStore();
@@ -28,15 +28,16 @@ const SidebarNavigation: React.FC = () => {
   const navItems = [
     { name: 'Dashboard', view: 'dashboard', icon: <LayoutDashboard size={20} /> },
     { name: 'Relation Builder', view: 'relation-builder', icon: <Waypoints size={20} /> },
+    { name: 'Pine Script', view: 'pine-script', icon: <FileText size={20} /> },
   ];
 
   return (
-    <nav className="bg-background w-64 border-r border-accent p-4 space-y-2">
+    <nav className="bg-background w-64 min-w-[250px] border-r border-accent p-4 space-y-2 flex-shrink-0 overflow-y-auto">
       {navItems.map((item) => (
         <button
           key={item.name}
           onClick={() => setView(item.view as any)}
-          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-left text-font hover:bg-accent ${
+          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-left text-font hover:bg-accent transition-colors ${
             activeView === item.view ? 'bg-accent' : ''
           }`}
         >

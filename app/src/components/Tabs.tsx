@@ -14,11 +14,11 @@ interface TabsProps {
 const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, setActiveTab }) => {
   return (
     <div className="h-full flex flex-col bg-background">
-      <div className="flex border-b border-accent">
+      <div className="flex border-b border-accent overflow-x-auto">
         {tabs.map((tab, index) => (
           <button
             key={index}
-            className={`p-4 text-font ${
+            className={`p-3 sm:p-4 text-font text-sm sm:text-base whitespace-nowrap flex-shrink-0 ${
               activeTab === index ? 'bg-accent' : 'hover:bg-gray-700'
             }`}
             onClick={() => setActiveTab(index)}
@@ -27,7 +27,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, setActiveTab }) => {
           </button>
         ))}
       </div>
-      <div className="flex-1 h-full">{tabs[activeTab]?.content}</div>
+      <div className="flex-1 h-full overflow-hidden">{tabs[activeTab]?.content}</div>
     </div>
   );
 };

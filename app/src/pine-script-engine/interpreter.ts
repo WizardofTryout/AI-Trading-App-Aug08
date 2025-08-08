@@ -1,7 +1,7 @@
 // A simple interpreter for a subset of Pine Script.
 // This is a placeholder and would need to be implemented to traverse the AST and execute the code.
 
-import { Program } from './parser';
+import type { Program } from './parser';
 
 export const interpret = (ast: Program, data: any) => {
   console.log('Interpreting AST:', ast);

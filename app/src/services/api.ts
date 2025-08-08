@@ -1,7 +1,9 @@
-// Mock API service
-import db from './database';
+// API service - all data through backend
 import { parse } from '../pine-script-engine/parser';
 import { interpret } from '../pine-script-engine/interpreter';
+
+// Backend API base URL
+const API_BASE = 'http://localhost:8000';
 
 export interface Settings {
   bitgetApiKey: string;
@@ -117,31 +119,29 @@ export const modifyStrategy = async (pair: string) => {
 };
 
 export const getTradeHistory = async (): Promise<Trade[]> => {
-  return new Promise((resolve, reject) => {
-    db.all('SELECT * FROM trades', (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows as Trade[]);
-      }
-    });
-  });
+  try {
+    const response = await fetch(`${API_BASE}/trades/`);
+    if (!response.ok) throw new Error('Failed to fetch trades');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching trade history:', error);
+    return [];
+  }
 };
 
 export const addTrade = async (trade: Omit<Trade, 'id'>) => {
-  return new Promise((resolve, reject) => {
-    db.run(
-      `INSERT INTO trades (pair, side, amount, entryPrice, startTime, leverage) VALUES (?, ?, ?, ?, ?, ?)`,
-      [trade.pair, trade.side, trade.amount, trade.entryPrice, trade.startTime, trade.leverage],
-      function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(this.lastID);
-        }
-      }
-    );
-  });
+  try {
+    const response = await fetch(`${API_BASE}/trades/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(trade)
+    });
+    if (!response.ok) throw new Error('Failed to add trade');
+    return await response.json();
+  } catch (error) {
+    console.error('Error adding trade:', error);
+    throw error;
+  }
 };
 
 export const runStrategy = async (strategy: string, data: any) => {

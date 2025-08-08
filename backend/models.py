@@ -3,6 +3,11 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+from sqlalchemy import Column, Integer, String, Float, JSON
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
 class Trade(Base):
     __tablename__ = "trades"
 
@@ -10,11 +15,11 @@ class Trade(Base):
     pair = Column(String, index=True)
     side = Column(String)
     amount = Column(Float)
-    entry_price = Column(Float)
-    exit_price = Column(Float, nullable=True)
+    entryPrice = Column(Float)
+    exitPrice = Column(Float, nullable=True)
     pnl = Column(Float, nullable=True)
-    start_time = Column(DateTime)
-    end_time = Column(DateTime, nullable=True)
+    startTime = Column(Integer)  # Unix timestamp
+    endTime = Column(Integer, nullable=True)
     leverage = Column(Float)
     fees = Column(Float, nullable=True)
 

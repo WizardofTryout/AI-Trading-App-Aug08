@@ -10,6 +10,9 @@ export interface Program extends Node {
   body: Node[];
 }
 
+// Additional type export for better compatibility
+export type { Program as ProgramType };
+
 export const parse = (code: string): Program => {
   console.log('Parsing Pine Script code:', code);
   // This is a mock implementation. A real implementation would parse the code into an AST.

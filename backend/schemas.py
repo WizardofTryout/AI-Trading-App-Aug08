@@ -20,11 +20,11 @@ class TradeBase(BaseModel):
     pair: str
     side: str
     amount: float
-    entry_price: float
-    exit_price: float | None = None
+    entryPrice: float
+    exitPrice: float | None = None
     pnl: float | None = None
-    start_time: datetime
-    end_time: datetime | None = None
+    startTime: int  # Unix timestamp
+    endTime: int | None = None
     leverage: float
     fees: float | None = None
 

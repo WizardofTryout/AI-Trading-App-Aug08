@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* TradingView Logo und Links komplett verstecken */
+a[href*="tradingview"],
+a[href*="trading-view"],
+.tv-logo,
+.tradingview-logo,
+[class*="tradingview"],
+[class*="tv-logo"],
+div[style*="tradingview"],
+/* Jegliche Links oder Logos im Chart verstecken */
+.tv-lightweight-charts a,
+.tv-lightweight-charts [href],
+/* Spezifische Selektoren für TradingView Branding */
+table tr td > a,
+table tr td > div > a {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

@@ -9,7 +9,7 @@ const DraggableNode = ({ nodeType, label, nodeData }: { nodeType: string; label:
 
   return (
     <div
-      className="p-4 border border-accent rounded-lg cursor-move bg-gray-800 hover:bg-gray-700 text-center text-font"
+      className="p-2 sm:p-4 border border-accent rounded-lg cursor-move bg-gray-800 hover:bg-gray-700 text-center text-font text-sm sm:text-base"
       onDragStart={(event) => onDragStart(event, nodeType)}
       draggable
     >
@@ -20,8 +20,8 @@ const DraggableNode = ({ nodeType, label, nodeData }: { nodeType: string; label:
 
 const Palette: React.FC = () => {
   return (
-    <aside className="w-64 bg-background p-4 space-y-4 border-r border-accent">
-      <h2 className="text-xl font-bold text-font">Nodes</h2>
+    <aside className="w-48 lg:w-64 bg-background p-2 sm:p-4 space-y-2 sm:space-y-4 border-r border-accent flex-shrink-0 overflow-y-auto">
+      <h2 className="text-lg sm:text-xl font-bold text-font">Nodes</h2>
       <DraggableNode nodeType="indicator" label="RSI" nodeData={{ indicator: 'rsi', params: { period: 14 } }} />
       <DraggableNode nodeType="indicator" label="MACD" nodeData={{ indicator: 'macd', params: { fast: 12, slow: 26, signal: 9 } }} />
       <DraggableNode nodeType="operator" label=">" nodeData={{ operator: '>' }} />

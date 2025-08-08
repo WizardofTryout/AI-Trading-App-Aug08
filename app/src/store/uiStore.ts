@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type View = 'dashboard' | 'relation-builder';
+type View = 'dashboard' | 'relation-builder' | 'pine-script';
 
 type UIState = {
   activeView: View;

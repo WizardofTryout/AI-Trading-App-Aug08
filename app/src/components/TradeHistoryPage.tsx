@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { getTradeHistory, Trade } from '../services/api';
+import { getTradeHistory } from '../services/api';
+import type { Trade } from '../services/api';
 
 const TradeHistoryPage: React.FC = () => {
   const [trades, setTrades] = useState<Trade[]>([]);

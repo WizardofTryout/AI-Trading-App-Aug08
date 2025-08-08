@@ -9,11 +9,11 @@ const timeframes = ['30s', '1m', '2m', '3m', '30m', '1h', '2h', '4h', '1d'];
 
 const TimeframeSelector: React.FC<TimeframeSelectorProps> = ({ selectedTimeframe, onTimeframeChange }) => {
   return (
-    <div className="flex items-center space-x-2">
-      <label htmlFor="timeframe-selector" className="text-font">Timeframe:</label>
+    <div className="flex items-center space-x-2 flex-wrap">
+      <label htmlFor="timeframe-selector" className="text-font flex-shrink-0">Timeframe:</label>
       <select
         id="timeframe-selector"
-        className="bg-accent p-2 rounded"
+        className="bg-accent p-2 rounded min-w-[80px] text-sm"
         value={selectedTimeframe}
         onChange={(e) => onTimeframeChange(e.target.value)}
       >
