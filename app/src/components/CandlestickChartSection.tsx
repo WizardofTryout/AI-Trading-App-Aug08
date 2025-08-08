@@ -58,6 +58,12 @@ const CandlestickChartSection: React.FC<CandlestickChartSectionProps> = ({ pair 
   const [chartData, setChartData] = useState(initialChartData);
   const [useAdvancedChart, setUseAdvancedChart] = useState(true); // Toggle between charts
   const [isLiveMode, setIsLiveMode] = useState(false);
+  
+  // Indicator visibility states
+  const [showRSI, setShowRSI] = useState(true);
+  const [showBollingerBands, setShowBollingerBands] = useState(true);
+  const [showMACD, setShowMACD] = useState(true);
+  const [showVolume, setShowVolume] = useState(true);
 
   // Simulate live data updates
   useEffect(() => {
@@ -149,6 +155,100 @@ const CandlestickChartSection: React.FC<CandlestickChartSectionProps> = ({ pair 
           </div>
         </div>
       )}
+
+      {/* Technical Indicators Control Panel */}
+      {useAdvancedChart && (
+        <div className="mb-3 p-3 bg-slate-800 bg-opacity-50 rounded-lg border border-slate-600">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-slate-200 flex items-center">
+              <span className="text-blue-400 mr-2">📊</span>
+              Technical Indicators
+            </h3>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => {
+                  setShowRSI(true);
+                  setShowBollingerBands(true);
+                  setShowMACD(true);
+                  setShowVolume(true);
+                }}
+                className="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+              >
+                All On
+              </button>
+              <button
+                onClick={() => {
+                  setShowRSI(false);
+                  setShowBollingerBands(false);
+                  setShowMACD(false);
+                  setShowVolume(false);
+                }}
+                className="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                All Off
+              </button>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {/* RSI Checkbox */}
+            <label className="flex items-center space-x-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={showRSI}
+                onChange={(e) => setShowRSI(e.target.checked)}
+                className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+              />
+              <span className="text-sm text-slate-300 group-hover:text-white transition-colors">
+                RSI (14)
+              </span>
+              <div className={`w-3 h-3 rounded ${showRSI ? 'bg-purple-500' : 'bg-gray-600'}`}></div>
+            </label>
+
+            {/* Bollinger Bands Checkbox */}
+            <label className="flex items-center space-x-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={showBollingerBands}
+                onChange={(e) => setShowBollingerBands(e.target.checked)}
+                className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+              />
+              <span className="text-sm text-slate-300 group-hover:text-white transition-colors">
+                Bollinger Bands
+              </span>
+              <div className={`w-3 h-3 rounded ${showBollingerBands ? 'bg-orange-500' : 'bg-gray-600'}`}></div>
+            </label>
+
+            {/* MACD Checkbox */}
+            <label className="flex items-center space-x-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={showMACD}
+                onChange={(e) => setShowMACD(e.target.checked)}
+                className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+              />
+              <span className="text-sm text-slate-300 group-hover:text-white transition-colors">
+                MACD
+              </span>
+              <div className={`w-3 h-3 rounded ${showMACD ? 'bg-cyan-500' : 'bg-gray-600'}`}></div>
+            </label>
+
+            {/* Volume Checkbox */}
+            <label className="flex items-center space-x-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={showVolume}
+                onChange={(e) => setShowVolume(e.target.checked)}
+                className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+              />
+              <span className="text-sm text-slate-300 group-hover:text-white transition-colors">
+                Volume
+              </span>
+              <div className={`w-3 h-3 rounded ${showVolume ? 'bg-yellow-500' : 'bg-gray-600'}`}></div>
+            </label>
+          </div>
+        </div>
+      )}
       
       <div className="flex-1 w-full min-h-[300px] sm:min-h-[400px]">
         {useAdvancedChart ? (
@@ -156,7 +256,10 @@ const CandlestickChartSection: React.FC<CandlestickChartSectionProps> = ({ pair 
             data={chartData} 
             height={400}
             showIndicators={true}
-            showVolume={true}
+            showVolume={showVolume}
+            showRSI={showRSI}
+            showBollingerBands={showBollingerBands}
+            showMACD={showMACD}
           />
         ) : (
           <LightweightChart data={chartData} />
